@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Akhil Ganji · Software Engineer Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+<style>
+  :root{
+    --bg:#f6f7fb; --text:#0f172a; --muted:#475569;
+    --t-hero:#eef2ff; --t-about:#ecfeff; --t-exp:#fef3c7;
+    --t-proj:#f0fdf4; --t-edu:#fdf2f8; --t-skill:#eff6ff; --t-contact:#fff7ed;
+    --panel:#ffffff; --stroke:#e5e7eb; --brand:#2563eb; --brand-2:#0ea5e9;
+    --rad:16px; --shadow:0 8px 28px rgba(15,23,42,.08); --max:1140px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;scroll-behavior:smooth}
+  h1,h2,h3{font-family:Poppins,Inter,system-ui,Arial,sans-serif}
+  a{color:var(--text);text-decoration:none}
+  img{max-width:100%;display:block}
+  .container{max-width:var(--max);margin:auto;padding:0 22px}
+  .card{background:var(--panel);border:1px solid var(--stroke);border-radius:var(--rad);box-shadow:var(--shadow)}
+  .btn{display:inline-flex;gap:10px;align-items:center;padding:.8rem 1.1rem;border-radius:12px;border:1px solid #cdd3da;background:#fff;font-weight:700;cursor:pointer}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;border-color:transparent}
+  .lead{color:var(--muted);font-size:1.05rem;line-height:1.6}
+  section{padding:88px 0}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:40;background:rgba(246,247,251,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;gap:10px;align-items:center;font-weight:800}
+  .links{display:flex;gap:16px}
+  .links a{padding:10px 12px;border-radius:10px}
+  .links a:hover{background:#f1f5f9}
+  .menu-btn{display:none}
+  @media (max-width:900px){.links{display:none}.menu-btn{display:inline-flex}}
+  .mobile{display:none}
+  .mobile.open{display:block;border-top:1px solid var(--stroke);background:#fff}
+  .mobile a{display:block;padding:14px 10px;border-bottom:1px solid var(--stroke)}
+
+/* HOME (clean pastel gradient blobs, no text watermark) */
+#home{
+  background:var(--t-hero);
+  position:relative;
+  overflow:hidden;
+}
+#home .wrap{
+  min-height:70vh;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  position:relative;
+  z-index:1;
+  padding:56px 0;
+}
+#home h1{font-size:clamp(32px,6vw,64px);line-height:1.08;margin:0 0 16px}
+#home .lead{max-width:920px;margin:0 auto 18px}
+#home .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* Soft decorative blobs (subtle, high-res, non-distracting) */
+#home::before,
+#home::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  inset:auto;
+  width:55vmax; height:55vmax;
+  border-radius:50%;
+  filter:blur(60px);
+  opacity:.35;
+  z-index:0;
+}
+#home::before{
+  top:-20vmax; left:-10vmax;
+  background:radial-gradient(closest-side, #93c5fd 0%, transparent 70%); /* blue-300 */
+}
+#home::after{
+  bottom:-22vmax; right:-8vmax;
+  background:radial-gradient(closest-side, #a5f3fc 0%, transparent 70%); /* cyan-200 */
+  opacity:.32;
+}
+
+/* Optional: light grid for depth (very faint) */
+@media (min-width:700px){
+  #home{
+    background:
+      linear-gradient(0deg, rgba(15,23,42,.03), rgba(15,23,42,.03)),
+      var(--t-hero);
+    mask-image: radial-gradient(1200px 600px at 50% 40%, #000 60%, transparent 100%);
+  }
+}
+
+
+  /* About */
+#about{background:var(--t-about)}
+#about .grid{
+  display:grid;
+  grid-template-columns: 1fr 420px; /* content | image */
+  gap:24px;
+  align-items:stretch;
+}
+
+
+.portrait {
+  width: 100%;
+  height: 100%;           /* fill full column height */
+  object-fit: cover;      /* crop without distortion */
+  border-radius: 14px;
+  border: 1px solid var(--stroke);
+}
+
+  @media (max-width:900px){#about .grid{grid-template-columns:1fr}}
+
+  /* Experience */
+  #experience{background:var(--t-exp)}
+  .item{display:grid;grid-template-columns:86px 1fr;gap:18px;align-items:flex-start;padding:18px}
+  .item .logo{width:86px;height:86px;object-fit:contain;border-radius:14px;border:1px solid var(--stroke);background:#fff}
+  .meta{color:#64748b;font-size:.95rem;margin-bottom:6px}
+  .item ul{margin:10px 0 0 18px}
+
+  /* Projects */
+  #projects{background:var(--t-proj)}
+  .project{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:center;padding:18px}
+  .project:nth-child(even){grid-template-columns:1fr 1.1fr}
+  .project .imgbox{border-radius:14px;overflow:hidden;border:1px solid var(--stroke)}
+  .project img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .project:hover img{transform:scale(1.035)}
+  @media (max-width:900px){.project{grid-template-columns:1fr}.project:nth-child(even){grid-template-columns:1fr}}
+
+  /* --- Fix project image sizing --- */
+.project .imgbox{
+  position: relative;
+  aspect-ratio: 16 / 10;     /* uniform landscape crop */
+  max-height: 360px;         /* cap height on desktop */
+  overflow: hidden;          /* crop overflow */
+}
+.project .imgbox img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;         /* neat crop, no distortion */
+}
+@media (max-width: 900px){
+  .project .imgbox{ max-height: 260px; }  /* smaller on mobile */
+}
+
+/* Use this instead for a taller thumbnail */
+.project .imgbox{ aspect-ratio: 4 / 5; max-height: 420px; }
+
+  /* Education */
+  #education{background:var(--t-edu)}
+  .edu{display:grid;grid-template-columns:86px 1fr;gap:18px;align-items:center;padding:18px}
+  .edu .logo{width:86px;height:86px;object-fit:contain;border-radius:14px;border:1px solid var(--stroke);background:#fff}
+
+  /* Skills: left description panel + right grid */
+  #skills{background:var(--t-skill)}
+  #skills .layout{display:grid;grid-template-columns:1fr 1.2fr;gap:22px}
+  .skills-panel{padding:20px;min-height:260px;display:flex;flex-direction:column;gap:10px}
+  .skills-panel h3{margin:.2rem 0}
+  .skills-panel .current{font-weight:800;color:var(--brand)}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .skill{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--stroke);border-radius:12px;background:#fff;cursor:pointer}
+  .skill i{font-size:26px}
+  .skill:hover{outline:2px solid rgba(37,99,235,.18)}
+  @media (max-width:900px){#skills .layout{grid-template-columns:1fr}}
+
+  /* Contact: left form + right description; socials are icons */
+  #contact{background:var(--t-contact)}
+  #contact .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:start}
+  #contact form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  #contact input, #contact textarea{
+    width:100%;padding:12px 12px;border:1px solid var(--stroke);border-radius:10px;background:#fff;font:inherit
+  }
+  #contact textarea{min-height:140px;resize:vertical}
+  .icon-links{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:16px}
+  .icon-link{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--stroke);background:#fff;transition:transform .15s ease}
+  .icon-link:hover{transform:translateY(-2px)}
+  .icon{width:22px;height:22px;display:block}
+
+  footer{border-top:1px solid var(--stroke);background:#fff}
+  footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;padding:22px 0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home" title="Back to Home">AG · Akhil Ganji</a>
+    <nav class="links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button id="menuBtn" class="menu-btn btn">Menu</button>
+  </div>
+  <div class="container mobile" id="mobileMenu">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<!-- HOME (direct content, no card) -->
+<section id="home">
+  <div class="container wrap">
+    <div style="position:relative;z-index:1;">
+      <h1>Hi, I’m Akhil Ganji — Software Engineer who build production-ready APIs and clean web apps.</h1>
+      <p class="lead">I design and develop scalable applications using Java, Spring Boot, React.js, and modern cloud tools. Passionate about building reliable, fast, and user-friendly products, I’ve delivered projects in microservices, APIs, and full-stack platforms.</p>
+      <div class="actions" style="margin-top:8px">
+        <a class="btn primary" href="#projects">View Projects</a>
+        <a class="btn" href="resume.pdf" target="_blank" rel="noopener">Download Resume</a>
+        <a class="btn" href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="grid">
+      <!-- LEFT: content -->
+      <div class="card" style="padding:20px">
+        <h2>About</h2>
+        <p class="lead"><strong>📌 Index / About Section</strong></p>
+        <p class="lead"><strong>Who I Am:</strong><br/>
+          I’m a Software Engineer with 2+ years of professional experience in backend and full-stack development...
+        </p>
+        <p class="lead"><strong>What I Do:</strong></p>
+        <ul class="lead" style="margin:10px 0 0 18px">
+          <li>Build scalable backend systems with Spring Boot and microservices.</li>
+          <li>Create responsive web apps using React.js and modern JavaScript.</li>
+          <li>Optimize databases (MySQL/PostgreSQL) for high-performance systems.</li>
+          <li>Implement CI/CD pipelines with Docker and Maven for fast deployments.</li>
+          <li>Apply Agile practices to deliver efficient, high-quality solutions.</li>
+        </ul>
+
+        <p class="lead"><strong>Quick Facts:</strong></p>
+        <ul class="lead" style="margin:10px 0 0 18px">
+          <li>🎓 Master’s in Information Technology Management (Webster University, GPA: 4.0)</li>
+          <li>💡 Experienced with AWS, Docker, Git, and Agile teams</li>
+          <li>📈 Strong focus on performance improvements and system scalability</li>
+        </ul>
+      </div>
+
+      <!-- RIGHT: image -->
+      <img class="portrait card" src="me.jpeg" alt="Portrait of Akhil Ganji"/>
+    </div>
+  </div>
+</section>
+
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <h2>Experience</h2>
+
+    <article class="card item">
+      <img class="logo" src="zensar.jpeg" alt="Zensar Technologies logo"/>
+      <div>
+        <h3>Software Engineer – Zensar Technologies</h3>
+        <div class="meta">Jul 2021 – Jul 2022</div>
+        <ul>
+          <li>Developed Spring Boot microservices → improved scalability & reduced response latency by 30%.</li>
+          <li>Automated CI/CD pipelines (Maven & Docker) → cut deployment time by 25%.</li>
+          <li>Optimized PostgreSQL/MySQL queries → reduced reporting time by 40%.</li>
+          <li>Delivered API integrations ahead of schedule in Agile sprints.</li>
+          <li>Mentored interns on coding standards and Git best practices.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card item">
+      <img class="logo" src="zensar.jpeg" alt="Zensar Technologies logo"/>
+      <div>
+        <h3>Junior Software Engineer – Zensar Technologies</h3>
+        <div class="meta">Aug 2021 – Jun 2022</div>
+        <ul>
+          <li>Built REST APIs for enterprise-grade applications.</li>
+          <li>Developed frontend modules with React.js → reduced load time by 20%.</li>
+          <li>Conducted unit testing &amp; debugging → ensured 95% defect-free releases.</li>
+          <li>Contributed to Agile sprint planning and code reviews.</li>
+          <li>Assisted in migrating legacy apps to Spring Boot + Dockerized environments.</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <h2>Projects</h2>
+
+    <article class="card project">
+      <div class="imgbox"><a href="#project-1"><img src="project-1.jpeg" alt="Production-Ready Java API screenshot"/></a></div>
+      <div>
+        <h3>NovaReserve – Booking Platform</h3>
+        <p class="lead">A restaurant reservation platform that enables customers to book tables instantly and view menus while providing restaurants with insights into occupancy, revenue, and customer behavior.</p>
+        <p><strong>Skills:</strong> React.js, JavaScript, HTML/CSS, Node.js, REST APIs, Responsive UI Design</p>
+        <a class="btn primary" href="#project-1">Open Page</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://github.com/AkhilGanj/Novareserve-Booking-Platform">GitHub</a>
+      </div>
+    </article>
+
+    <article class="card project">
+      <div>
+        <h3>CulinaServe – Recipe Portal</h3>
+        <p class="lead">A recipe management web application that helps users discover, organize, and rate recipes across categories. It features ingredient tracking, user reviews, and personalized recommendations to enhance the cooking experience.</p>
+        <p><strong>Skills:</strong> Java, Spring Boot, REST APIs, JPA/Hibernate, MySQL, Docker, HTML/CSS</p>
+        <a class="btn primary" href="#project-2">Open Page</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://github.com/AkhilGanj/CulinaServe-Recipe-Portal">GitHub</a>
+      </div>
+      <div class="imgbox"><a href="#project-2"><img src="project-2.png" alt="Spring Boot REST API Example screenshot"/></a></div>
+    </article>
+
+    <article class="card project">
+      <div class="imgbox"><a href="#project-3"><img src="project-3.png" alt="Meta Frontend Developer Capstone screenshot"/></a></div>
+      <div>
+        <h3>TaskForge – Productivity Suite</h3>
+        <p class="lead">A productivity tool that allows users to create, manage, and track tasks while offering team collaboration features such as activity feeds, progress charts, and scheduling.</p>
+        <p><strong>Skills:</strong> Java, Spring Boot, REST APIs, Maven, PostgreSQL, Git, Agile Practices</p>
+        <a class="btn primary" href="#project-3">Open Page</a>
+        <a class="btn" target="_blank" rel="noopener" href="https://github.com/AkhilGanj/TaskForge-Productivity-Suite">GitHub</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <h2>Education</h2>
+    <article class="card edu">
+      <img class="logo" src="bits.jpeg" alt="University logo"/>
+      <div>
+        <h3>Bachelor of Technology</h3>
+        <div class="meta">Balaji Institue of Technology & Sciences · Warangal, India</div>
+        <p class="lead">Coursework: Data Structures, DBMS, OOPs, Operating Systems, Computer Networks.</p>
+      </div>
+    </article>
+
+
+    <article class="card edu">
+      <img class="logo" src="webster.png" alt="University logo"/>
+      <div>
+        <h3>Masters in Information Technology Management</h3>
+        <div class="meta">Webster University · SanAntonio, USA</div>
+        <p class="lead">Coursework: Web Development, System Analysis & Design, Organizational Behavior, Cybersecuty.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <h2>Skills</h2>
+    <div class="layout">
+      <div id="skillsPanel" class="card skills-panel" aria-live="polite">
+        <h3><span class="current" id="skillTitle">Hover a skill →</span></h3>
+        <p id="skillDesc" class="lead">Move your mouse over a skill on the right to see how I’m aligned with it.</p>
+        <p class="lead" id="skillExtra" style="margin-top:6px;color:#1f2937"></p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill" data-title="Java" data-desc="Primary backend language for services and domain logic." data-extra="Clean architecture, refactors, micro-benchmarks when needed."><i class="devicon-java-plain"></i><span>Java</span></div>
+        <div class="skill" data-title="Spring Boot" data-desc="Production REST APIs, validation, error strategy, observability." data-extra="Spring Data JPA, OpenAPI, layered modules."><i class="devicon-spring-plain"></i><span>Spring Boot</span></div>
+        <div class="skill" data-title="JavaScript / React" data-desc="Front-of-stack delivery with clean components & accessible UIs." data-extra="Hooks, forms, fetch/Axios, routing."><i class="devicon-react-original"></i><span>JavaScript / React</span></div>
+        <div class="skill" data-title="PostgreSQL / MySQL" data-desc="Schema design, indexing, query optimization, safe migrations." data-extra="Liquibase/Flyway, connection pooling."><i class="devicon-postgresql-plain"></i><span>PostgreSQL / MySQL</span></div>
+        <div class="skill" data-title="Docker" data-desc="Containerized local dev and deployable images." data-extra="Multi-stage builds, Compose for local stacks."><i class="devicon-docker-plain"></i><span>Docker</span></div>
+        <div class="skill" data-title="AWS" data-desc="Pragmatic use of EC2, S3, RDS for hosting and storage." data-extra="Environment config and secrets management."><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
+        <div class="skill" data-title="Git / CI/CD" data-desc="Automated checks and repeatable deployments." data-extra="GitHub Actions/Jenkins pipelines, trunk-based pragmatism."><i class="devicon-git-plain"></i><span>Git / CI/CD</span></div>
+        <div class="skill" data-title="Testing" data-desc="Unit & integration tests for correctness and confidence." data-extra="JUnit 5, Mockito, MockMvc, Testcontainers."><i class="devicon-junit-plain"></i><span>Testing</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <h2>Contact</h2>
+    <div class="grid">
+      <!-- LEFT: Form + icon socials -->
+      <div class="card" style="padding:20px">
+        <form id="contactForm">
+          <div class="row">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required/>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="ag.akhilganji@gmail.com" required/>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" placeholder="Subject" required/>
+          </div>
+          <div style="margin-top:12px">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message..." required></textarea>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="btn primary" href="mailto:ag.akhilganji@gmail.com" type="submit">Send</button>
+          </div>
+        </form>
+
+        <div class="icon-links" aria-label="Social profiles">
+          <a class="icon-link" href="https://www.linkedin.com/in/ganji-akhil/" target="_blank" rel="noopener" title="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.84-2.1 3.8-2.1 4.07 0 4.82 2.68 4.82 6.17V24h-4v-6.6c0-1.58-.03-3.62-2.2-3.62-2.2 0-2.54 1.72-2.54 3.5V24h-4V8.5z"/></svg>
+          </a>
+          <a class="icon-link" href="https://github.com/AkhilGanj" target="_blank" rel="noopener" title="GitHub">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.25.98 11.52c0 4.85 3.15 8.96 7.52 10.41.55.1.75-.24.75-.53 0-.26-.01-.94-.02-1.85-3.06.66-3.71-1.48-3.71-1.48-.5-1.27-1.22-1.61-1.22-1.61-.99-.67.07-.65.07-.65 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.57 1.19 3.19.91.1-.71.38-1.2.68-1.48-2.44-.28-5.01-1.22-5.01-5.42 0-1.2.43-2.17 1.13-2.94-.11-.28-.49-1.41.11-2.94 0 0 .92-.29 3.01 1.12.87-.24 1.81-.36 2.74-.36s1.87.12 2.74.36c2.09-1.41 3.01-1.12 3.01-1.12.6 1.53.22 2.66.11 2.94.7.77 1.13 1.74 1.13 2.94 0 4.21-2.57 5.13-5.02 5.4.39.34.73 1.03.73 2.08 0 1.5-.01 2.71-.01 3.08 0 .29.2.64.75.53 4.37-1.45 7.52-5.56 7.52-10.41C23.02 5.25 18.27.5 12 .5z"/></svg>
+          </a>
+          <a class="icon-link" href="https://instagram.com/akhil.ganji" target="_blank" rel="noopener" title="Instagram">
+            <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.3.4.6.2 1 .4 1.5.9.5.5.7.9.9 1.5.2.4.3 1.1.4 2.3.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.4 2.3-.2.6-.4 1-.9 1.5-.5.5-.9.7-1.5.9-.4.2-1.1.3-2.3.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.3-.4-.6-.2-1-.4-1.5-.9-.5-.5-.7-.9-.9-1.5-.2-.4-.3-1.1-.4-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.4-2.3.2-.6.4-1 .9-1.5.5-.5.9-.7 1.5-.9.4-.2 1.1-.3 2.3-.4C8.4 2.2 8.8 2.2 12 2.2m0-2.2C8.7 0 8.3 0 7 0 5.7.1 4.8.2 4 .5c-.9.3-1.6.7-2.3 1.4C1 2.6.6 3.3.3 4.2.1 5 .1 5.9 0 7.2 0 8.5 0 8.9 0 12s0 3.5.1 4.8c.1 1.3.2 2.2.5 3 .3.9.7 1.6 1.4 2.3.7.7 1.4 1.1 2.3 1.4.8.3 1.7.4 3 .5 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.3-.1 2.2-.2 3-.5.9-.3 1.6-.7 2.3-1.4.7-.7 1.1-1.4 1.4-2.3.3-.8.4-1.7.5-3 .1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.3-.2-2.2-.5-3-.3-.9-.7-1.6-1.4-2.3C21.4 1 20.7.6 19.8.3c-.8-.3-1.7-.4-3-.5C15.5 0 15.1 0 12 0z"/><circle cx="18.4" cy="5.6" r="1.1"/><path d="M12 5.8A6.2 6.2 0 1 0 12 18.2 6.2 6.2 0 1 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 1 1 0 8z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Description box -->
+      <aside class="card" style="padding:20px">
+        <h3>Let’s build something reliable.</h3>
+        <p class="lead">Reach out for backend-heavy web apps, API design, and pragmatic cloud deployments. I care about clean contracts, observability, and fast feedback loops.</p>
+        <ul class="lead" style="margin:10px 0 0 18px">
+          <li>Java · Spring Boot · REST</li>
+          <li>SQL (PostgreSQL/MySQL), migrations</li>
+          <li>Docker · CI/CD · AWS</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container row">
+    <div>© 2025 <b>Akhil Ganji</b></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <a class="icon-link" href="https://www.linkedin.com/in/ganji-akhil/" target="_blank" rel="noopener" title="LinkedIn"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.8v2.1h.05c.53-1 1.84-2.1 3.8-2.1 4.07 0 4.82 2.68 4.82 6.17V24h-4v-6.6c0-1.58-.03-3.62-2.2-3.62-2.2 0-2.54 1.72-2.54 3.5V24h-4V8.5z"/></svg></a>
+      <a class="icon-link" href="https://github.com/AkhilGanj" target="_blank" rel="noopener" title="GitHub"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.25.98 11.52c0 4.85 3.15 8.96 7.52 10.41.55.1.75-.24.75-.53 0-.26-.01-.94-.02-1.85-3.06.66-3.71-1.48-3.71-1.48-.5-1.27-1.22-1.61-1.22-1.61-.99-.67.07-.65.07-.65 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.57 1.19 3.19.91.1-.71.38-1.2.68-1.48-2.44-.28-5.01-1.22-5.01-5.42 0-1.2.43-2.17 1.13-2.94-.11-.28-.49-1.41.11-2.94 0 0 .92-.29 3.01 1.12.87-.24 1.81-.36 2.74-.36s1.87.12 2.74.36c2.09-1.41 3.01-1.12 3.01-1.12.6 1.53.22 2.66.11 2.94.7.77 1.13 1.74 1.13 2.94 0 4.21-2.57 5.13-5.02 5.4.39.34.73 1.03.73 2.08 0 1.5-.01 2.71-.01 3.08 0 .29.2.64.75.53 4.37-1.45 7.52-5.56 7.52-10.41C23.02 5.25 18.27.5 12 .5z"/></svg></a>
+      <a class="icon-link" href="https://instagram.com/akhil.ganji" target="_blank" rel="noopener" title="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.9.2 2.3.4.6.2 1 .4 1.5.9.5.5.7.9.9 1.5.2.4.3 1.1.4 2.3.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.9-.4 2.3-.2.6-.4 1-.9 1.5-.5.5-.9.7-1.5.9-.4.2-1.1.3-2.3.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.9-.2-2.3-.4-.6-.2-1-.4-1.5-.9-.5-.5-.7-.9-.9-1.5-.2-.4-.3-1.1-.4-2.3C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.9.4-2.3.2-.6.4-1 .9-1.5.5-.5.9-.7 1.5-.9.4-.2 1.1-.3 2.3-.4C8.4 2.2 8.8 2.2 12 2.2m0-2.2C8.7 0 8.3 0 7 0 5.7.1 4.8.2 4 .5c-.9.3-1.6.7-2.3 1.4C1 2.6.6 3.3.3 4.2.1 5 .1 5.9 0 7.2 0 8.5 0 8.9 0 12s0 3.5.1 4.8c.1 1.3.2 2.2.5 3 .3.9.7 1.6 1.4 2.3.7.7 1.4 1.1 2.3 1.4.8.3 1.7.4 3 .5 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.3-.1 2.2-.2 3-.5.9-.3 1.6-.7 2.3-1.4.7-.7 1.1-1.4 1.4-2.3.3-.8.4-1.7.5-3 .1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.3-.2-2.2-.5-3-.3-.9-.7-1.6-1.4-2.3C21.4 1 20.7.6 19.8.3c-.8-.3-1.7-.4-3-.5C15.5 0 15.1 0 12 0z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const YOUR_EMAIL = "YOUR_EMAIL_HERE@example.com";
+
+  // Mobile menu
+  const menuBtn=document.getElementById('menuBtn');
+  const mobile=document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click',()=>mobile.classList.toggle('open'));
+  mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobile.classList.remove('open')));
+
+  // Skills hover -> update description panel
+  const panelTitle=document.getElementById('skillTitle');
+  const panelDesc=document.getElementById('skillDesc');
+  const panelExtra=document.getElementById('skillExtra');
+  const skills=document.querySelectorAll('.skill');
+  const defaultTitle='Hover a skill →', defaultDesc='Move your mouse over a skill on the right to see how I’m aligned with it.', defaultExtra='';
+  skills.forEach(s=>{
+    const update=()=>{panelTitle.textContent=s.dataset.title;panelDesc.textContent=s.dataset.desc;panelExtra.textContent=s.dataset.extra||'';};
+    s.addEventListener('mouseenter',update);
+    s.addEventListener('focus',update);
+    s.setAttribute('tabindex','0');
+  });
+  document.querySelector('.skills-grid').addEventListener('mouseleave',()=>{
+    panelTitle.textContent=defaultTitle;panelDesc.textContent=defaultDesc;panelExtra.textContent=defaultExtra;
+  });
+
+  // Contact form -> open mail client with pre-filled message
+  const form=document.getElementById('contactForm');
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const name=document.getElementById('name').value.trim();
+    const fromEmail=document.getElementById('email').value.trim();
+    const subject=document.getElementById('subject').value.trim()||"Message from portfolio";
+    const message=document.getElementById('message').value.trim();
+    const body=`Name: ${name}\nEmail: ${fromEmail}\n\n${message}`;
+    const mailto=`mailto:${encodeURIComponent(YOUR_EMAIL)}?subject=${encodeURIComponent("Portfolio: "+subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href=mailto;
+  });
+</script>
+</body>
+</html>
