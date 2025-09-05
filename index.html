@@ -158,17 +158,42 @@
   .edu{display:grid;grid-template-columns:86px 1fr;gap:18px;align-items:center;padding:18px}
   .edu .logo{width:86px;height:86px;object-fit:contain;border-radius:14px;border:1px solid var(--stroke);background:#fff}
 
-  /* Skills: left description panel + right grid */
-  #skills{background:var(--t-skill)}
-  #skills .layout{display:grid;grid-template-columns:1fr 1.2fr;gap:22px}
-  .skills-panel{padding:20px;min-height:260px;display:flex;flex-direction:column;gap:10px}
-  .skills-panel h3{margin:.2rem 0}
-  .skills-panel .current{font-weight:800;color:var(--brand)}
-  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-  .skill{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--stroke);border-radius:12px;background:#fff;cursor:pointer}
-  .skill i{font-size:26px}
-  .skill:hover{outline:2px solid rgba(37,99,235,.18)}
-  @media (max-width:900px){#skills .layout{grid-template-columns:1fr}}
+  /* Skills: panel (left) + grid (right) */
+#skills { background: var(--t-skill); }
+#skills .skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;  /* panel | grid */
+  gap: 22px;
+  align-items: start;
+}
+
+/* Panel */
+.skills-panel {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 260px;
+}
+.skills-panel h3 { margin:.2rem 0; }
+.skills-panel .current { font-weight:800; color: var(--brand); }
+
+/* Grid of tiles */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+  gap: 14px;
+}
+.skill {
+  display: flex; gap: 10px; align-items: center;
+  padding: 12px;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+.skill i { font-size: 26px; }
+.skill:hover { outline: 2px solid rgba(37,99,235,.18); }
 
   /* Contact: left form + right description; socials are icons */
   #contact{background:var(--t-contact)}
@@ -374,26 +399,59 @@
 <section id="skills">
   <div class="container">
     <h2>Skills</h2>
-    <div class="layout">
+
+    <!-- two-column wrapper -->
+    <div class="skills-layout">
+      <!-- LEFT: description panel -->
       <div id="skillsPanel" class="card skills-panel" aria-live="polite">
         <h3><span class="current" id="skillTitle">Hover a skill →</span></h3>
         <p id="skillDesc" class="lead">Move your mouse over a skill on the right to see how I’m aligned with it.</p>
         <p class="lead" id="skillExtra" style="margin-top:6px;color:#1f2937"></p>
       </div>
+
+      <!-- RIGHT: grid of tiles -->
       <div class="skills-grid">
-        <div class="skill" data-title="Java" data-desc="Primary backend language for services and domain logic." data-extra="Clean architecture, refactors, micro-benchmarks when needed."><i class="devicon-java-plain"></i><span>Java</span></div>
-        <div class="skill" data-title="Spring Boot" data-desc="Production REST APIs, validation, error strategy, observability." data-extra="Spring Data JPA, OpenAPI, layered modules."><i class="devicon-spring-plain"></i><span>Spring Boot</span></div>
-        <div class="skill" data-title="JavaScript / React" data-desc="Front-of-stack delivery with clean components & accessible UIs." data-extra="Hooks, forms, fetch/Axios, routing."><i class="devicon-react-original"></i><span>JavaScript / React</span></div>
-        <div class="skill" data-title="PostgreSQL / MySQL" data-desc="Schema design, indexing, query optimization, safe migrations." data-extra="Liquibase/Flyway, connection pooling."><i class="devicon-postgresql-plain"></i><span>PostgreSQL / MySQL</span></div>
-        <div class="skill" data-title="Docker" data-desc="Containerized local dev and deployable images." data-extra="Multi-stage builds, Compose for local stacks."><i class="devicon-docker-plain"></i><span>Docker</span></div>
-        <div class="skill" data-title="AWS" data-desc="Pragmatic use of EC2, S3, RDS for hosting and storage." data-extra="Environment config and secrets management."><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
-        <div class="skill" data-title="Git / CI/CD" data-desc="Automated checks and repeatable deployments." data-extra="GitHub Actions/Jenkins pipelines, trunk-based pragmatism."><i class="devicon-git-plain"></i><span>Git / CI/CD</span></div>
-        <div class="skill" data-title="Testing" data-desc="Unit & integration tests for correctness and confidence." data-extra="JUnit 5, Mockito, MockMvc, Testcontainers."><i class="devicon-junit-plain"></i><span>Testing</span></div>
+        <div class="skill" data-title="Java"
+          data-desc="I built enterprise-grade backend systems in Java that supported critical business workflows, optimizing performance through clean design. I’m eager to deepen my expertise in advanced Java frameworks and JVM performance tuning for high-scale applications.">
+          <i class="devicon-java-plain"></i><span>Java</span>
+        </div>
+        <div class="skill" data-title="Spring Boot"
+          data-desc="I developed REST APIs and microservices with Spring Boot that reliably processed high-volume requests using layered modules and observability. I’m interested in exploring reactive programming and cloud-native Spring integrations to broaden my expertise.">
+            <i class="devicon-spring-plain"></i><span>Spring Boot</span>
+        </div>
+
+        <div class="skill" data-title="JavaScript / React"
+          data-desc="I delivered responsive React frontends that integrated seamlessly with backend APIs, improving load times and user engagement. I’m motivated to explore modern React patterns, performance optimizations, and scalable front-end architectures.">
+          <i class="devicon-react-original"></i><span>JavaScript / React</span>
+        </div>
+
+        <div class="skill" data-title="PostgreSQL / MySQL"
+          data-desc="I designed schemas, optimized queries, and reduced latency with indexing and pooling for production databases. I want to refine my database design skills further while diving into advanced data engineering and distributed SQL systems.">
+          <i class="devicon-postgresql-plain"></i><span>PostgreSQL / MySQL</span>
+        </div>
+
+      <div class="skill" data-title="Docker"
+        data-desc="I containerized applications with Docker, using multi-stage builds and Compose for efficient deployments. I’m excited about expanding into Kubernetes and advanced container orchestration strategies.">
+        <i class="devicon-docker-plain"></i><span>Docker</span>
+      </div>
+
+      <div class="skill" data-title="AWS"
+        data-desc="I deployed workloads on AWS using EC2, S3, and RDS, configuring environments for reliability and cost efficiency. I aim to explore serverless computing, managed services, and cloud cost optimization strategies.">
+        <i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span>
+      </div>
+
+      <div class="skill" data-title="Git / CI/CD"
+        data-desc="I built CI/CD pipelines with GitHub Actions and Jenkins, automating deployments for faster, safer releases. I want to broaden this into advanced DevOps workflows, infrastructure as code, and GitOps practices.">
+        <i class="devicon-git-plain"></i><span>Git / CI/CD</span>
+      </div>
+
+      <div class="skill" data-title="Testing"
+        data-desc="I implemented unit and integration tests with JUnit, Mockito, and Testcontainers that ensured reliable, defect-free releases. I’m driven to strengthen expertise in test automation frameworks and continuous testing at scale.">
+        <i class="devicon-junit-plain"></i><span>Testing</span>
       </div>
     </div>
   </div>
 </section>
-
 <!-- CONTACT -->
 <section id="contact">
   <div class="container">
